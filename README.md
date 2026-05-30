@@ -1,25 +1,25 @@
 # Image Converter Pro
 
-Современный GUI-конвертор изображений с поддержкой drag & drop, пакетной обработки и тёмной темы.
+A modern graphical image converter with drag-and-drop support, batch processing, and dark theme.
 
-## Скачать
+## Download
 
 [Download latest version](https://github.com/Benjorax/ImageConverter/releases)
 
-## Быстрый старт - Скачай и используй — без установки Python.
+## Quick Start - Download and use - no Python installation required.
 
-1. Скачать архив
-2. Запустить `ImageConverterPro.exe`
-3. Перетащить файлы в окно
-4. Нажать "Convert"
+1. Download archive
+2. Run `ImageConverterPro.exe`
+3. Drag files into the window
+4. Click "Convert"
 
-## Возможности
+## Possibilities
 
-- Drag & Drop файлов и папок
-- Пакетная конвертация
-- Поддержка форматов: PNG, JPEG, BMP, GIF
-- Прогрессбар в реальном времени
-- Лог операций
-- Тёмная тема интерфейса
-- Обработка прозрачности
+- Drag & Drop files and folders
+- Batch conversion
+- Supported formats: PNG, JPEG, BMP, GIF
+- Real-time progress bar
+- Operation log
+- Dark interface theme
+- Transparency processing
 
