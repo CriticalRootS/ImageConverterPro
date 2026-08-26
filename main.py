@@ -1,9 +1,31 @@
 import os
-import customtkinter as ctk
-from tkinterdnd2 import DND_FILES, TkinterDnD
+import importlib
 from tkinter import filedialog, messagebox
-from converter import ImageConverter
-from PIL import Image, ImageTk
+
+
+def _import_dependency(module_name, package_name=None):
+    """Import an optional dependency while keeping editor diagnostics clean."""
+    try:
+        return importlib.import_module(module_name)
+    except ImportError as exc:
+        package_name = package_name or module_name
+        raise RuntimeError(
+            f"Missing dependency '{package_name}'. Install it with "
+            f"'python -m pip install {package_name}'."
+        ) from exc
+
+
+try:
+    ctk = _import_dependency("customtkinter")
+    tkinterdnd2 = _import_dependency("tkinterdnd2")
+    DND_FILES = tkinterdnd2.DND_FILES
+    TkinterDnD = tkinterdnd2.TkinterDnD
+    Image = _import_dependency("PIL.Image", "Pillow")
+    ImageTk = _import_dependency("PIL.ImageTk", "Pillow")
+    ImageConverter = _import_dependency("converter").ImageConverter
+except RuntimeError as exc:
+    messagebox.showerror("Missing dependency", str(exc))
+    raise SystemExit(1) from exc
 
 ctk.set_appearance_mode("Dark")
 ctk.set_default_color_theme("dark-blue")
