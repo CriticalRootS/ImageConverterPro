@@ -1,12 +1,19 @@
-from PIL import Image
+import importlib
 import os
+
+try:
+    Image = importlib.import_module("PIL.Image")
+except ImportError as e:
+    raise ImportError(
+        "Pillow is required to convert images. Install it with: pip install Pillow"
+    ) from e
 
 class ImageConverter:
     def __init__(self):
         pass
 
     def convert(self, input_path, output_path, output_format=None):
-        """Конвертирует одно изображение"""
+        """Convert a single image."""
         try:
             with Image.open(input_path) as img:
                 if output_format is None:
@@ -19,7 +26,7 @@ class ImageConverter:
             print(f"[ERROR] {input_path}: {e}")
 
     def batch_convert(self, input_folder, output_folder, output_format=None):
-        """Конвертирует все изображения из папки"""
+        """Convert all images in a folder."""
         if not os.path.exists(output_folder):
             os.makedirs(output_folder)
 

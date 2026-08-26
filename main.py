@@ -39,19 +39,16 @@ class FinalImageConverter:
         self.converter = ImageConverter()
         self.files = []
 
-        # Drag & Drop область
-        self.drop_area = ctk.CTkLabel(master, text="Перетащите файлы или папки сюда",
+        self.drop_area = ctk.CTkLabel(master, text="Drag files or folders here",
                                       width=650, height=80, fg_color="#2A2A2A", corner_radius=10)
         self.drop_area.pack(pady=10)
         self.drop_area.drop_target_register(DND_FILES)
         self.drop_area.dnd_bind('<<Drop>>', self.drop_files)
 
-        # Лог конвертации
         self.log = ctk.CTkTextbox(master, width=650, height=200, fg_color="#1C1C1C", text_color="white")
         self.log.pack(pady=10)
         self.log.configure(state="disabled")
 
-        # Формат и кнопки
         self.format_var = ctk.StringVar(value="PNG")
         self.dropdown = ctk.CTkOptionMenu(master, variable=self.format_var,
                                           values=["PNG","JPEG","BMP","GIF"], fg_color="#2A2A2A", button_color="#3A3A3A")
@@ -60,7 +57,6 @@ class FinalImageConverter:
         btn_frame = ctk.CTkFrame(master, fg_color="#1C1C1C")
         btn_frame.pack(pady=10)
 
-        # Иконки для кнопок (опционально - можно вставить свои PNG-файлы)
         self.add_icon = None
         self.clear_icon = None
         self.convert_icon = None
@@ -80,19 +76,18 @@ class FinalImageConverter:
         except FileNotFoundError:
             pass
 
-        self.add_btn = ctk.CTkButton(btn_frame, text="Добавить файлы", image=self.add_icon, compound="left",
+        self.add_btn = ctk.CTkButton(btn_frame, text="Add files", image=self.add_icon, compound="left",
                                      command=self.add_files)
         self.add_btn.grid(row=0, column=0, padx=5)
 
-        self.clear_btn = ctk.CTkButton(btn_frame, text="Очистить список", image=self.clear_icon, compound="left",
+        self.clear_btn = ctk.CTkButton(btn_frame, text="Clear list", image=self.clear_icon, compound="left",
                                        command=self.clear_list)
         self.clear_btn.grid(row=0, column=1, padx=5)
 
-        self.convert_btn = ctk.CTkButton(btn_frame, text="Конвертировать", image=self.convert_icon, compound="left",
+        self.convert_btn = ctk.CTkButton(btn_frame, text="Convert", image=self.convert_icon, compound="left",
                                          command=self.convert_files)
         self.convert_btn.grid(row=0, column=2, padx=5)
 
-        # Прогрессбар
         self.progress = ctk.CTkProgressBar(master, width=650, fg_color="#2A2A2A", progress_color="#3A7FF6")
         self.progress.pack(pady=5)
         self.progress.set(0)
@@ -109,11 +104,11 @@ class FinalImageConverter:
         for f in files:
             if f not in self.files:
                 self.files.append(f)
-        self.log_message(f"[INFO] Добавлено {len(files)} файлов")
+        self.log_message(f"[INFO] Added {len(files)} file(s)")
 
     def clear_list(self):
         self.files.clear()
-        self.log_message("[INFO] Список очищен")
+        self.log_message("[INFO] File list cleared")
 
     def drop_files(self, event):
         paths = self.master.tk.splitlist(event.data)
@@ -123,17 +118,16 @@ class FinalImageConverter:
                 if path not in self.files:
                     self.files.append(path)
                     added += 1
-        self.log_message(f"[INFO] Перетащено {added} файлов/папок")
+        self.log_message(f"[INFO] Added {added} file(s)/folder(s) by drag and drop")
 
     def convert_files(self):
         if not self.files:
-            messagebox.showwarning("Внимание", "Сначала добавьте файлы или папки!")
+            messagebox.showwarning("Warning", "Add files or folders first!")
             return
-        output_folder = filedialog.askdirectory(title="Выберите папку для сохранения")
+        output_folder = filedialog.askdirectory(title="Select an output folder")
         if not output_folder:
             return
 
-        # Собираем все файлы из папок
         full_list = []
         for f in self.files:
             if os.path.isfile(f):
@@ -146,7 +140,7 @@ class FinalImageConverter:
 
         total_files = len(full_list)
         if total_files == 0:
-            messagebox.showwarning("Внимание", "Нет файлов для конвертации")
+            messagebox.showwarning("Warning", "No files to convert")
             return
 
         self.progress.set(0)
@@ -165,8 +159,8 @@ class FinalImageConverter:
                 self.log_message(f"[ERROR] {file}: {e}")
             self.progress.set((i+1)/total_files)
 
-        self.log_message("[INFO] Конвертация завершена")
-        messagebox.showinfo("Готово", "Конвертация завершена!")
+        self.log_message("[INFO] Conversion completed")
+        messagebox.showinfo("Completed", "Conversion completed!")
 
 if __name__ == "__main__":
     root = TkinterDnD.Tk()
