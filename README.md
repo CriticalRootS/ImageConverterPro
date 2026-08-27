@@ -4,7 +4,7 @@ A modern graphical image converter with drag-and-drop support, batch processing,
 
 ## Download
 
-[Download latest version](https://github.com/CriticalRootS/ImageConverter/releases)
+[Download latest version](https://github.com/CriticalRootS/ImageConverterPro/releases)
 
 ## Quick Start - Download and use - no Python installation required
 
